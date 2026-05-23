@@ -1,12 +1,15 @@
-import type { FrequencyRow, Sentiment, Taxonomy } from "@/lib/types";
+import type { FrequencyRow, Taxonomy, ThemeSentiment } from "@/lib/types";
 
 import { SentimentBadge } from "./SentimentBadge";
 import { ThemeRow } from "./ThemeRow";
 import { indexThemes } from "@/lib/data";
 
-const SENTIMENT_ORDER: Sentiment[] = ["positive", "neutral", "negative"];
+// The frequency table only ever sees 3-value sentiment — per spec D1 a
+// "mixed" comment is decomposed into one row per (theme, polarity) at
+// aggregate-build time. ThemeSentiment is the right type here.
+const SENTIMENT_ORDER: ThemeSentiment[] = ["positive", "neutral", "negative"];
 
-const SENTIMENT_DESCRIPTION: Record<Sentiment, string> = {
+const SENTIMENT_DESCRIPTION: Record<ThemeSentiment, string> = {
   positive: "What academia values about JoVE",
   neutral: "What academia is debating about JoVE",
   negative: "What academia complains about JoVE",
@@ -16,8 +19,10 @@ const SENTIMENT_DESCRIPTION: Record<Sentiment, string> = {
  * Group rows by sentiment, preserving rank order within each group.
  * Returns sentiments in the canonical positive → neutral → negative order.
  */
-function groupBySentiment(rows: FrequencyRow[]): Map<Sentiment, FrequencyRow[]> {
-  const groups = new Map<Sentiment, FrequencyRow[]>();
+function groupBySentiment(
+  rows: FrequencyRow[],
+): Map<ThemeSentiment, FrequencyRow[]> {
+  const groups = new Map<ThemeSentiment, FrequencyRow[]>();
   for (const s of SENTIMENT_ORDER) groups.set(s, []);
   for (const row of rows) {
     const bucket = groups.get(row.sentiment);
