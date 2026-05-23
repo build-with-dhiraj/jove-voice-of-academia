@@ -27,12 +27,13 @@ export function VoicePanel({ cards, taxonomy }: VoicePanelProps) {
           id="voice-panel-heading"
           className="font-heading text-2xl font-semibold tracking-tight text-foreground"
         >
-          Voice of Academia
+          Editor&apos;s picks
         </h2>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          Curated quotes from real Reddit threads. Each one was flagged by the
-          pipeline against a journalist-grade rubric and then human-approved.
-          Verbatim &mdash; no paraphrasing, no aggregation.
+          The same curated quotes shown per-theme above, here grouped as a
+          standalone reading panel. Each one was flagged by the pipeline
+          against a journalist-grade rubric and then human-approved &mdash;
+          verbatim, no paraphrasing, no aggregation.
         </p>
       </header>
 
