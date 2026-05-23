@@ -1,0 +1,108 @@
+# Voice of Academia — weekly delta scan
+#
+# Runs the discover -> fetch -> disambiguate -> tag -> store -> aggregate
+# pipeline against the past week's Reddit activity, then commits the
+# refreshed dashboard aggregate + last_run.json checkpoint to main.
+#
+# The push triggers Vercel's auto-deploy via the existing GitHub
+# integration, so no extra deploy step is needed here.
+#
+# Activated week 2+ — Phase 8 (the manual mega-backfill) runs once on
+# D's machine first, then this cron picks up week-over-week. See the
+# Phase 10 dispatch in
+#   /Users/pw/Obsidian/JoVE/50 — Decisions & Bets/Voice of Academia — Implementation Plan.md
+# for the operator runbook.
+name: Weekly VoA scan
+
+on:
+  schedule:
+    # Sunday 23:00 UTC. In local times this is:
+    #   - Monday 04:30 IST (D's tz if in India)
+    #   - Sunday 18:00 US/Pacific
+    #   - Sunday 21:00 US/Eastern
+    # Adjust here if a different cadence is needed; cron syntax is
+    # standard 5-field POSIX.
+    - cron: "0 23 * * 0"
+  # Manual trigger from the GH Actions UI. Useful for re-running a
+  # missed week or testing a freshly-deployed change.
+  workflow_dispatch:
+
+# Concurrency: never let two cron runs overlap (e.g. if a manual
+# dispatch fires while the scheduled run is still executing). The newer
+# run waits for the older to complete instead of being cancelled —
+# weekly delta is short enough that queueing is cheaper than rerunning.
+concurrency:
+  group: weekly-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    # GH Actions hard-caps a job at 6h; we cap at 350min so the job
+    # exits cleanly with a useful log before the platform terminates it.
+    timeout-minutes: 350
+    permissions:
+      # Needed so the workflow's final step can push the aggregate +
+      # last_run.json updates back to main.
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # We need full history so the auto-commit author is on top of
+          # the right branch — checkout's default depth-1 is enough for
+          # commit-on-main but we set it explicitly for clarity.
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        # uv is the project's package manager (see pyproject.toml).
+        # Pin to a recent version; uv has been stable since 0.4.
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "uv>=0.5.0"
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run weekly delta scan
+        env:
+          # Reddit (PRAW) — required for authenticated mode (~100 req/min).
+          # The delta scan also works without these but is rate-limited
+          # to ~10 req/min under unauth mode, which would push runtime
+          # beyond the timeout for non-trivial deltas.
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
+          # Anthropic — required for tag.py (Haiku classification +
+          # Sonnet voice judgment).
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Pinecone — required for store.py upserts.
+          PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
+          # Firecrawl — required for Ring 3 (Google-via-Firecrawl
+          # discovery). If absent, Ring 3 is silently skipped; the
+          # weekly delta still covers Rings 1+2.
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        # --max-cost-usd 30 is the documented default; spelled out
+        # here so an operator scanning the workflow sees the ceiling
+        # without having to read the script.
+        run: uv run python -m pipeline.weekly_delta --max-cost-usd 30
+
+      - name: Commit aggregate and last_run.json
+        # Both files are gitignored locally (developer machines should
+        # not pollute their working tree with run artifacts), but the
+        # cron's role is exactly to publish these — so we force-add.
+        run: |
+          git config user.name "voa-cron"
+          git config user.email "cron@voa.local"
+          git add -f dashboard/data/latest.json data/last_run.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit — aggregate identical to last week."
+          else
+            git commit -m "data: weekly aggregate $(date -u +%Y-%m-%d)"
+            git push
+          fi
