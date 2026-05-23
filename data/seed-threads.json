@@ -1,0 +1,215 @@
+{
+  "version": "2026-05-23",
+  "purpose": "Validated JoVE-discussion Reddit threads used as (a) discovery anchors and (b) voice-rubric exemplar sources. All threads verified by orchestrator + D as genuinely about JoVE the journal (not false positives).",
+  "discovery_anchors": {
+    "description": "Subreddits and multireddits to scope the discovery pipeline.",
+    "multireddits": [
+      {
+        "owner": "in-quiz-ition",
+        "name": "all_about_science",
+        "url": "https://www.reddit.com/user/in-quiz-ition/m/all_about_science/"
+      },
+      {
+        "owner": "in-quiz-ition",
+        "name": "research_and_education_copy",
+        "url": "https://www.reddit.com/user/in-quiz-ition/m/research_and_education_copy/"
+      }
+    ],
+    "subreddits_core": [
+      "AskAcademia",
+      "labrats",
+      "PhD",
+      "GradSchool",
+      "postdoc"
+    ],
+    "subreddits_broad": [
+      "biology",
+      "chemistry",
+      "biotech",
+      "medicalschool",
+      "neuroscience",
+      "research",
+      "Professors",
+      "AskScience",
+      "science",
+      "scihub",
+      "Scholar",
+      "EngineeringStudents",
+      "biostasis",
+      "cogsci",
+      "evopsych"
+    ]
+  },
+  "known_threads": [
+    {
+      "id": "29o6fu",
+      "subreddit": "AskAcademia",
+      "title": "JoVE: Is this legit?",
+      "url": "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/",
+      "created": "2014-07-03",
+      "comments": 17,
+      "primary_themes": ["legitimacy", "author_fees", "video_format", "indexing_impact"],
+      "source": "D's original seed #1"
+    },
+    {
+      "id": "1nkbbm3",
+      "subreddit": "AskAcademia",
+      "title": "Special Issue Invitation form Jove. They can't be serious...",
+      "url": "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/",
+      "created": "2025-09-18",
+      "comments": 18,
+      "primary_themes": ["guest_editor_outreach", "aggressive_marketing", "legitimacy", "institutional_access"],
+      "source": "D's original seed #2"
+    },
+    {
+      "id": "1s7vs2b",
+      "subreddit": "labrats",
+      "title": "Is JoVE respectable?",
+      "url": "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/",
+      "created": "2026-03-30",
+      "comments": 19,
+      "primary_themes": ["legitimacy", "reputation_with_pis", "video_format", "author_fees", "peer_review_quality"],
+      "source": "D's original seed #3"
+    },
+    {
+      "id": "hjg41o",
+      "subreddit": "AskAcademia",
+      "title": "JoVE Guest Editor invitation",
+      "url": "https://www.reddit.com/r/AskAcademia/comments/hjg41o/jove_guest_editor_invitation/",
+      "created": "2020-07-02",
+      "comments": 7,
+      "primary_themes": ["guest_editor_outreach", "legitimacy"],
+      "source": "D's original seed #4"
+    },
+    {
+      "id": "1d9dnze",
+      "subreddit": "AskAcademia",
+      "title": "Guest editing for JoVE",
+      "url": "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/",
+      "created": "2024-06-06",
+      "comments": 6,
+      "primary_themes": ["guest_editor_outreach", "author_fees", "access_paywall"],
+      "source": "D's original seed #5"
+    },
+    {
+      "id": "95pq3y",
+      "subreddit": "AskAcademia",
+      "title": "Just got a JoVE request",
+      "url": "https://www.reddit.com/r/AskAcademia/comments/95pq3y/just_got_a_jove_request/",
+      "created": "2018-08-09",
+      "comments": 6,
+      "primary_themes": ["author_outreach", "video_format", "author_fees", "peer_review_quality"],
+      "source": "D's original seed #6"
+    },
+    {
+      "id": "9hzpzh",
+      "subreddit": "labrats",
+      "title": "JoVE video access?",
+      "url": "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_video_access/",
+      "created": "2018-09-22",
+      "comments": 23,
+      "primary_themes": ["access_paywall", "institutional_access", "indexing_impact", "peer_review_quality"],
+      "source": "discovered 2026-05-23, high signal"
+    },
+    {
+      "id": "mtfkd",
+      "subreddit": "biology",
+      "title": "I work for JoVE (Journal of Visualized Experiments). I'd like your opinions on our journal, please!",
+      "url": "https://www.reddit.com/r/biology/comments/mtfkd/i_work_for_jove_journal_of_visualized_experiments/",
+      "created": "2011-11-29",
+      "comments": 9,
+      "primary_themes": ["video_format", "production_experience", "peer_review_quality"],
+      "source": "discovered 2026-05-23 - JoVE employee solicited feedback (insider perspective)"
+    },
+    {
+      "id": "lxs135",
+      "subreddit": "uAlberta",
+      "title": "Access to this database will end due to budget cuts",
+      "url": "https://www.reddit.com/r/uAlberta/comments/lxs135/access_to_this_database_will_end_due_to_budget/",
+      "created": "2021-03-05",
+      "comments": 8,
+      "primary_themes": ["institutional_access"],
+      "source": "discovered 2026-05-23 - institutional cancellation signal"
+    },
+    {
+      "id": "ksx87q",
+      "subreddit": "scihub",
+      "title": "How to access https://www.jove.com/ Journal of Visualized Experiment via sci hub?",
+      "url": "https://www.reddit.com/r/scihub/comments/ksx87q/how_to_access_httpswwwjovecom_journal_of/",
+      "created": "2021-01-08",
+      "comments": 3,
+      "primary_themes": ["access_paywall"],
+      "source": "discovered 2026-05-23"
+    },
+    {
+      "id": "q3nr48",
+      "subreddit": "labrats",
+      "title": "Does anyone know how to access Jove videos for free?",
+      "url": "https://www.reddit.com/r/labrats/comments/q3nr48/does_anyone_know_how_to_access_jove_videos_for/",
+      "created": "2021-10-08",
+      "comments": 5,
+      "primary_themes": ["access_paywall", "institutional_access"],
+      "source": "discovered 2026-05-23"
+    },
+    {
+      "id": "2tvdg5",
+      "subreddit": "chemistry",
+      "title": "Do you have access to JoVE? (Journal of Visualized Experiments) I need your help.",
+      "url": "https://www.reddit.com/r/chemistry/comments/2tvdg5/do_you_have_access_to_jove_journal_of_visualized/",
+      "created": "2015-01-28",
+      "comments": 5,
+      "primary_themes": ["access_paywall", "methodology_focus"],
+      "source": "discovered 2026-05-23"
+    },
+    {
+      "id": "13d9tye",
+      "subreddit": "labrats",
+      "title": "JoVE - peer reviewed videos of methodology - reputation? Similar journals? (engineering/environmental science)",
+      "url": "https://www.reddit.com/r/labrats/comments/13d9tye/jove_peer_reviewed_videos_of_methodology/",
+      "created": "2023-05-10",
+      "comments": 2,
+      "primary_themes": ["reputation_with_pis", "methodology_focus", "author_fees"],
+      "source": "discovered 2026-05-23"
+    },
+    {
+      "id": "14bpo2j",
+      "subreddit": "PhD",
+      "title": "Writing an article... but the whole thing is mostly pictures",
+      "url": "https://www.reddit.com/r/PhD/comments/14bpo2j/writing_an_article_but_the_whole_thing_is_mostly/",
+      "created": "2023-06-17",
+      "comments": 13,
+      "primary_themes": ["video_format", "reader_recommendation"],
+      "source": "discovered 2026-05-23 - JoVE as recommended resource"
+    },
+    {
+      "id": "t0k4gn",
+      "subreddit": "AskAcademia",
+      "title": "Multimedia journals?",
+      "url": "https://www.reddit.com/r/AskAcademia/comments/t0k4gn/multimedia_journals/",
+      "created": "2022-02-25",
+      "comments": 0,
+      "primary_themes": ["video_format"],
+      "source": "discovered 2026-05-23 - discovery framing"
+    }
+  ],
+  "discovery_search_patterns": {
+    "description": "Title-pattern templates mined from the seed threads. The discovery layer uses these (with JoVE+aliases) to find more in-scope threads.",
+    "patterns": [
+      "is X legit",
+      "is X respectable",
+      "X guest editor invitation",
+      "special issue invitation X",
+      "just got an X request",
+      "guest editing for X",
+      "X video access",
+      "X access",
+      "does anyone have X",
+      "X for free",
+      "X peer reviewed",
+      "multimedia journals",
+      "X predatory",
+      "X submission",
+      "how do I access X"
+    ]
+  }
+}

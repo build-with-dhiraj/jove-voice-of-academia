@@ -1,0 +1,233 @@
+{
+  "version": "2026-05-23",
+  "max_themes": 16,
+  "v1_scope": "JoVE only",
+  "co_designed_by": "D Rage + orchestrator, validated against 15 Reddit threads × ~150 comments",
+  "themes": [
+    {
+      "id": "access_paywall",
+      "label": "Reader access / paywall friction",
+      "description": "Reader-side friction accessing JoVE videos or protocols. Paywall complaints, sci-hub attempts, requests for access help from peers, university VPN workarounds, frustration that videos require subscription.",
+      "example_phrasings": [
+        "Does anyone have a JoVE account/can help with getting a video?",
+        "How do I access this video?",
+        "Sci-hub doesn't work for videos",
+        "Institution doesn't have access"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly negative"
+    },
+    {
+      "id": "guest_editor_outreach",
+      "label": "Guest editor / special issue invitations",
+      "description": "JoVE inviting someone to be a guest editor of a special issue. Includes complaints about spam-feel, fishiness, lack of editorial autonomy.",
+      "example_phrasings": [
+        "JoVE Guest Editor invitation",
+        "Special Issue Invitation form Jove",
+        "They spam these invites",
+        "If they're soliciting you and you don't know them, then it's probably scammy"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly negative (spam-feel)"
+    },
+    {
+      "id": "author_outreach",
+      "label": "Author solicitation / article-conversion invitations",
+      "description": "JoVE inviting someone to turn an existing paper into a JoVE video, or to submit a new manuscript directly. Distinct from guest_editor_outreach: this is about your own paper as author, not editing others' work.",
+      "example_phrasings": [
+        "Just got a JoVE request",
+        "Solicitation of articles based off of published papers",
+        "Asked me to publish a bunch of times and it made absolutely no sense",
+        "JoVE marketer calling me multiple times a week"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly negative (spam-feel)"
+    },
+    {
+      "id": "legitimacy",
+      "label": "Legitimacy / predatory feel",
+      "description": "Whether JoVE is a legitimate scientific journal vs a predatory operation. Includes vanity-publishing concerns, MDPI-comparison, the 'gray area' framing.",
+      "example_phrasings": [
+        "Is this legit?",
+        "Is JoVE respectable?",
+        "They aren't predatory but they're aggressive in recruiting",
+        "Innovative things and predatory practices, gray area",
+        "As bad as MDPI"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "heavily debated both ways"
+    },
+    {
+      "id": "reputation_with_pis",
+      "label": "Reputation among senior researchers and PIs",
+      "description": "How senior researchers, advisors, and PIs view JoVE; their guidance to junior researchers about whether to publish there; the 'it's not Nature' framing.",
+      "example_phrasings": [
+        "Boss was a bit mimimi because it is not NATURE",
+        "I was offered that as a late stage graduate student",
+        "It didn't seem worth the significant effort unless you had your own method",
+        "My PI was asking about it"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mixed"
+    },
+    {
+      "id": "video_format",
+      "label": "Video-as-format value, suitability, watchability",
+      "description": "Discussion of the video medium itself — whether video helps for protocols, format suitability for one's research type, watchability of seeing oneself on video, format-vs-text trade-off.",
+      "example_phrasings": [
+        "Love their video demonstrations of methods",
+        "Having a video of a protocol is such a no brainer",
+        "Worst part is seeing/hearing myself on video",
+        "Make sure that your technique lends itself better to video than paper",
+        "Kind of kitschy"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly positive (genuine value-add)"
+    },
+    {
+      "id": "author_fees",
+      "label": "Author-side publication fees",
+      "description": "The cost JoVE charges authors to publish: ~$2,400 video production fee + $1,800 OA add-on. Includes comparison to other journals' fees.",
+      "example_phrasings": [
+        "High publication costs due to the entire filming process",
+        "Expensive to publish in",
+        "Several thousand bucks to help produce your video",
+        "Publication fee is a bit higher than other journals"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly negative"
+    },
+    {
+      "id": "peer_review_quality",
+      "label": "Peer-review rigor and acceptance bar",
+      "description": "Quality and rigor of JoVE's peer review process, reviewer depth/engagement, perceived selectivity, rubber-stamp suspicions. ABSORBS the former acceptance_bar theme — Reddit voices conflate these in practice.",
+      "example_phrasings": [
+        "All our articles have to go through a rigorous peer review process",
+        "Really aren't very discriminating in what they accept",
+        "Reviewers watch to make sure it doesn't cut to weird stuff halfway through",
+        "Indiscriminate nature of their publishing",
+        "Rubber stamp"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mixed (debated)"
+    },
+    {
+      "id": "institutional_access",
+      "label": "Institutional subscriptions, library budgets, cancellations",
+      "description": "Library-side subscription experience, institutional licensing pricing, budget cuts, cancellation announcements, price-hike complaints.",
+      "example_phrasings": [
+        "Our library asked us if anyone was using them or if they could unsubscribe",
+        "Increased their subscription cost by 45% two years in a row",
+        "We actually straight up unsubscribed this year",
+        "Most of the time being on a university WiFi network gives you access"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly negative"
+    },
+    {
+      "id": "methodology_focus",
+      "label": "Methodology fit / cross-disciplinary applicability",
+      "description": "Whether JoVE is right for one's discipline or methodology, niche-protocol value, the 'protocol library vs novel-science journal' framing.",
+      "example_phrasings": [
+        "JoVE isn't for novel science. It's a protocol library",
+        "Many of their protocols are just extremely niche",
+        "Engineering/environmental science",
+        "Useful for some types of articles"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mixed"
+    },
+    {
+      "id": "indexing_impact",
+      "label": "PubMed/MEDLINE indexing & impact factor",
+      "description": "Indexing in PubMed/MEDLINE, impact factor (~1.0 in 2024), citation expectations, what counts for tenure/promotion.",
+      "example_phrasings": [
+        "Low impact factor and high publication costs",
+        "Impact factor of 1.2",
+        "IF is a great way to decide if a paper is worth believing",
+        "Their impact factor isn't a reflection of the quality of their content"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly negative (low-IF complaints)"
+    },
+    {
+      "id": "author_cv_value",
+      "label": "Personal CV / career value of publishing in JoVE",
+      "description": "The author's own cost-benefit calculation: is publishing in JoVE worth it for MY career? Distinct from reputation_with_pis (which is advisor's verdict) — this is the individual's own math.",
+      "example_phrasings": [
+        "Wouldn't consider it - not worth the significant effort",
+        "I got my first last author paper like that - great boost to our careers",
+        "The benefit to your CV is minimal",
+        "Got one in JoVE - I am proud of the output",
+        "We declined because the technique wasn't novel"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mixed (career calculation)"
+    },
+    {
+      "id": "aggressive_marketing",
+      "label": "Business-side sales/marketing aggression (not editorial outreach)",
+      "description": "JoVE's BUSINESS-side marketing/sales tactics: cold-call subscription pitches, spoofed librarian emails, mutating subscription packages, repeated contact attempts to non-decision-makers. Distinct from editorial outreach (themes 2 & 3).",
+      "example_phrasings": [
+        "They used my responses to spoof an email from me to my librarian",
+        "JoVE marketer calling me multiple times a week",
+        "Constantly mutating subscription packages",
+        "Librarians hate Jove for their extremely aggressive marketing",
+        "Dogshit editorial and marketing practices"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "strongly negative"
+    },
+    {
+      "id": "production_experience",
+      "label": "Author-side video production experience",
+      "description": "The hands-on author experience of making a JoVE video: lab visits by production crew, scripting demands, days of filming, professional quality of the production team.",
+      "example_phrasings": [
+        "They have an actual team come into your lab and professionally record you over several days",
+        "Doing a professional-grade peer-reviewed video is a totally different experience (and a lot more work!)",
+        "The JoVE production folks did an awesome job",
+        "Very specific demands on how the protocol should be written and on the filming script"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mostly positive (professional team)"
+    },
+    {
+      "id": "peer_journal_comparison",
+      "label": "Comparison to other journals (MDPI, Frontiers, Nature, Cell, etc.)",
+      "description": "JoVE discussed alongside or compared to other publishing outlets — both predatory-ecosystem peers (MDPI, Frontiers, Springer, Elsevier) and prestige journals (Nature, Cell). Frequently appears as a cross-tag rather than primary topic.",
+      "example_phrasings": [
+        "Like Springer and Elsevier?",
+        "Got similar emails from JoVE, MDPI, and Frontiers",
+        "They're as bad as MDPI",
+        "It's not Nature",
+        "Different from most journals"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "mixed"
+    },
+    {
+      "id": "reproducibility_value",
+      "label": "Reproducibility benefit of video protocols",
+      "description": "JoVE's video format praised as a solution to research reproducibility problems — the idea that text protocols miss critical detail that video captures.",
+      "example_phrasings": [
+        "Innovative platform worth supporting (especially in light of some fields' reproducibility problems)",
+        "How much info can be/is missing from published protocols",
+        "Show a real in-depth look at protocols as they are being performed",
+        "Indispensable service"
+      ],
+      "applies_to_sentiments": ["positive", "neutral", "negative"],
+      "observed_sentiment_skew": "strongly positive"
+    }
+  ],
+  "emerging_bucket": {
+    "id": "emerging_other",
+    "label": "Emerging / Other",
+    "description": "LLM could not confidently fit this comment to a canonical theme. Promoted to canonical when sustained frequency emerges (weekly D review)."
+  },
+  "co_design_provenance": {
+    "data_threads_read": 15,
+    "comment_data_points_reviewed": "approximately 150",
+    "themes_dropped_from_v1_draft": ["time_to_publish (no data signal)", "acceptance_bar (merged into peer_review_quality)", "onboarding_authors (no data signal)", "editor_engagement (folded into editorial_outreach)"],
+    "themes_added_from_data": ["author_outreach (split from editorial_outreach)", "author_cv_value", "aggressive_marketing", "institutional_access", "methodology_focus", "production_experience", "peer_journal_comparison", "reproducibility_value"]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "version": "2026-05-23",
+  "v1_active": ["JoVE"],
+  "v1_scope_note": "v1 is JoVE-only per Voice of Academia — System Design § Scope. Comparative journals are v2 expansion ONLY after JoVE dashboard is validated by D. Do NOT populate v2 entries during v1 builds.",
+  "v2_planned": [
+    "Nature",
+    "Cell",
+    "eLife",
+    "PLOS",
+    "Science",
+    "BMJ",
+    "JAMA"
+  ],
+  "v2_planned_note": "Documented for forward-compatibility only. The data model supports multi-journal storage and ranking; v1 dashboard does NOT include a journal-filter UI affordance.",
+  "jove_aliases_to_match": [
+    "JoVE",
+    "Jove",
+    "JOVE",
+    "Journal of Visualized Experiments",
+    "Journal of Visual Experiments",
+    "jove.com",
+    "myjove",
+    "MyJoVE"
+  ]
+}
