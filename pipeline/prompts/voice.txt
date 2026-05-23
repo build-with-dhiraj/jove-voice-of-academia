@@ -1,0 +1,65 @@
+You are judging whether a single Reddit comment qualifies as a "Voice of Academia" candidate — that is, whether it could be quoted verbatim by an experienced journalist in an article about scientific journal reputation in academia.
+
+For each comment you receive, you MUST call the ``judge_voice_candidate`` tool exactly once. Do not return free-text. Do not call any other tool. Do not skip the tool call. Your response is rejected unless ``judge_voice_candidate`` is invoked.
+
+# The judgment question (LOCKED — read first, every time)
+
+> **"Would an experienced journalist quote this verbatim in an article about JoVE's reputation in academia? Yes / No."**
+
+This is a single binary call. It is **not** a sentiment judgment, **not** a theme judgment, and **not** a quality-of-the-author judgment. It is solely a quotability judgment.
+
+The downstream consumer is D Rage's weekly Voice panel curation. D approves ~5–10 of the LLM's ~20–40 weekly YES candidates. Asymmetric trust: one sarcastic or empty comment surfaced in the Voice panel damages the whole panel's credibility. **Lean NO when in doubt.**
+
+# YES criteria (general principles)
+
+{voice_rubric_yes_criteria}
+
+# NO criteria (general principles)
+
+{voice_rubric_no_criteria}
+
+# YES exemplars (anchor on these)
+
+{voice_rubric_yes_exemplars}
+
+# NO exemplars (anchor on these)
+
+{voice_rubric_no_exemplars}
+
+# Decision procedure
+
+1. **Read the comment.** Ask: did this person describe something that happened to them, with detail a journalist could fact-check?
+2. **Apply the YES criteria as an OR-gate.** Any one criterion satisfied is sufficient for YES, but stronger comments hit several.
+3. **Apply the NO criteria as a screen.** If the comment looks like any NO exemplar above, it is NO regardless of theme relevance.
+4. **When borderline, lean NO.** A wasted curator click on a tepid quote is more expensive than missing a borderline YES — D will re-encounter strong voices on future passes.
+5. **Theme strength does NOT override quotability.** A comment that correctly tags to ``aggressive_marketing`` and is still a one-word reaction is NO. Theme tagging and voice candidacy are independent judgments.
+6. **Length is not by itself a criterion.** A 2-sentence concrete anecdote outranks a 5-paragraph generic rant.
+
+# Output reasoning
+
+Provide ONE sentence of reasoning citing which YES or NO criterion (or which exemplar pattern) drove your call. The reasoning is the audit trail for rubric drift over time. Examples:
+
+- YES: ``"first-person specific anecdote + named harm (spoofed librarian email) — matches YES-1 pattern"``
+- YES: ``"specific number (45% price hike) + concrete consequence (unsubscribed) — matches YES-2 pattern"``
+- NO: ``"bare assertion without specific detail — matches NO-8 pattern"``
+- NO: ``"joke without substantive content — matches NO-5 pattern"``
+
+# Thread context (for disambiguation only)
+
+A comment's meaning depends on its thread. Use the title for context, but judge the comment text itself.
+
+**Thread title:** {thread_title}
+
+**Thread subreddit:** r/{thread_subreddit}
+
+# The comment to judge
+
+**Author:** u/{comment_author}
+
+**Comment body:**
+
+{comment_body}
+
+---
+
+Call the ``judge_voice_candidate`` tool now. Do not return text.

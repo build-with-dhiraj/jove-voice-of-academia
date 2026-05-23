@@ -31,6 +31,7 @@ next-env.d.ts
 data/checkpoint.json
 data/last_run.json
 data/tagged-comments.jsonl
+data/tag-cost-log.jsonl
 
 # IDE
 .vscode/
