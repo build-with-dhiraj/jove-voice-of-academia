@@ -32,6 +32,7 @@ data/checkpoint.json
 data/last_run.json
 data/tagged-comments.jsonl
 data/tag-cost-log.jsonl
+data/threads.jsonl
 
 # IDE
 .vscode/
