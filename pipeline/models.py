@@ -37,6 +37,15 @@ DiscoveredVia = Literal[
     "ring3_firecrawl_google",
 ]
 
+# Phase 6 store-layer constant. Pinecone metadata cannot hold ``None``;
+# ``TaggedComment.sentiment`` is ``None`` on classification failure (see
+# :mod:`pipeline.tag` fallback). When persisting that record to Pinecone we
+# substitute this literal string so the column type stays uniform across
+# every record in the ``social-listening`` namespace. ``"unknown"`` (not
+# ``"null"``) so dashboard filters can render it as a real bucket without
+# special-casing.
+SENTIMENT_FALLBACK_STR: str = "unknown"
+
 
 class ThreadCandidate(BaseModel):
     """A Reddit thread surfaced by one of the three discovery rings.
@@ -205,6 +214,17 @@ class TaggedComment(BaseModel):
 
     comment_id: str = Field(
         description="PRAW fullname (``t1_xxx``) — matches ``Comment.id``."
+    )
+    thread_id: str | None = Field(
+        default=None,
+        description=(
+            "PRAW fullname of the parent submission (``t3_xxx``) the comment "
+            "lives under. ``None`` is permitted for backwards-compatibility "
+            "with TaggedComments emitted before this field existed, but "
+            "Phase 5's ``tag_comment`` populates it from ``thread_context.id``. "
+            "Phase 7's aggregator uses it to join comments to their parent "
+            "thread without re-parsing the permalink with regex."
+        ),
     )
     permalink: str = Field(description="Absolute reddit.com URL to the comment.")
     sentiment: Sentiment | None = Field(

@@ -562,17 +562,23 @@ def _usd_for_call(
 # =========================================================================
 
 
-def _default_fallback(comment: Comment, *, reason: str) -> TaggedComment:
+def _default_fallback(
+    comment: Comment, *, reason: str, thread_id: str | None = None
+) -> TaggedComment:
     """Build the safe-default :class:`TaggedComment` when classification fails.
 
     Per the dispatch spec: ``sentiment=None``, single ``emerging_other``
     assignment at neutral sentiment, ``voice_candidate=False`` with a
     machine-readable reason. The caller logs a warning before invoking
     this — so the failure is visible in ops logs.
+
+    ``thread_id`` is forwarded so the Phase 7 aggregator can still join
+    even failed-tag rows back to their parent thread.
     """
 
     return TaggedComment(
         comment_id=comment.id,
+        thread_id=thread_id,
         permalink=comment.permalink,
         sentiment=None,
         themes=[ThemeAssignment(theme="emerging_other", sentiment="neutral")],
@@ -751,7 +757,9 @@ def tag_comment(
 
     # ---- Decide which result-path to take -------------------------------
     if classification_failed or parsed_classification is None:
-        tagged = _default_fallback(comment, reason="classification_failed")
+        tagged = _default_fallback(
+            comment, reason="classification_failed", thread_id=thread_context.id
+        )
     else:
         try:
             theme_assignments = [
@@ -770,6 +778,7 @@ def tag_comment(
 
             tagged = TaggedComment(
                 comment_id=comment.id,
+                thread_id=thread_context.id,
                 permalink=comment.permalink,
                 sentiment=parsed_classification["sentiment"],
                 themes=theme_assignments,
@@ -788,7 +797,9 @@ def tag_comment(
                 exc,
             )
             tagged = _default_fallback(
-                comment, reason="classification_failed"
+                comment,
+                reason="classification_failed",
+                thread_id=thread_context.id,
             )
 
     # ---- Append cost log (best-effort; never raise) ---------------------
