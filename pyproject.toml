@@ -1,0 +1,24 @@
+[project]
+name = "jove-voice-of-academia"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.104.1",
+    "firecrawl-py>=4.27.2",
+    "pinecone>=9.0.1",
+    "praw>=7.8.1",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
+    "tenacity>=9.1.4",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+    "mypy>=2.1.0",
+    "pytest>=9.0.3",
+    "pytest-mock>=3.15.1",
+    "pytest-vcr>=1.0.2",
+    "ruff>=0.15.14",
+]

@@ -1,0 +1,42 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.turbo/
+next-env.d.ts
+
+# Vercel
+.vercel/
+
+# Pipeline runtime artifacts
+data/checkpoint.json
+data/last_run.json
+data/tagged-comments.jsonl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
