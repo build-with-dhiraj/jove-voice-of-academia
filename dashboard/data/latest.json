@@ -1,0 +1,366 @@
+{
+  "_note": "MOCK DATA — replaced by pipeline's aggregate.py output in production. Shape matches Aggregate schema; entries are realistic-but-synthetic illustrative content for dashboard development before the Phase 8 backfill completes.",
+  "generated_at": "2026-05-23T18:00:00Z",
+  "time_horizon": "2010-01-01",
+  "total_threads": 47,
+  "total_comments": 812,
+  "rows": [
+    {
+      "sentiment": "negative",
+      "theme": "aggressive_marketing",
+      "journal": "JoVE",
+      "thread_count": 18,
+      "comment_count": 64,
+      "upvote_sum": 482,
+      "reply_count": 91,
+      "last_comment_at": "2026-05-12T14:23:00Z",
+      "newest_thread_at": "2026-04-08T09:14:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/",
+        "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/",
+        "https://www.reddit.com/r/AskAcademia/comments/95pq3y/just_got_a_jove_request/"
+      ],
+      "rank": 1
+    },
+    {
+      "sentiment": "negative",
+      "theme": "guest_editor_outreach",
+      "journal": "JoVE",
+      "thread_count": 14,
+      "comment_count": 48,
+      "upvote_sum": 311,
+      "reply_count": 72,
+      "last_comment_at": "2026-05-09T18:42:00Z",
+      "newest_thread_at": "2026-03-22T11:30:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/hjg41o/jove_guest_editor_invitation/",
+        "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/",
+        "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/"
+      ],
+      "rank": 2
+    },
+    {
+      "sentiment": "negative",
+      "theme": "author_fees",
+      "journal": "JoVE",
+      "thread_count": 12,
+      "comment_count": 39,
+      "upvote_sum": 287,
+      "reply_count": 58,
+      "last_comment_at": "2026-05-15T07:11:00Z",
+      "newest_thread_at": "2026-04-19T16:02:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/",
+        "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/",
+        "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/"
+      ],
+      "rank": 3
+    },
+    {
+      "sentiment": "negative",
+      "theme": "institutional_access",
+      "journal": "JoVE",
+      "thread_count": 9,
+      "comment_count": 27,
+      "upvote_sum": 198,
+      "reply_count": 41,
+      "last_comment_at": "2026-04-30T22:55:00Z",
+      "newest_thread_at": "2026-03-15T13:48:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/",
+        "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/"
+      ],
+      "rank": 4
+    },
+    {
+      "sentiment": "negative",
+      "theme": "indexing_impact",
+      "journal": "JoVE",
+      "thread_count": 8,
+      "comment_count": 22,
+      "upvote_sum": 156,
+      "reply_count": 34,
+      "last_comment_at": "2026-05-04T10:19:00Z",
+      "newest_thread_at": "2026-02-28T14:36:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/",
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/"
+      ],
+      "rank": 5
+    },
+    {
+      "sentiment": "negative",
+      "theme": "author_outreach",
+      "journal": "JoVE",
+      "thread_count": 7,
+      "comment_count": 19,
+      "upvote_sum": 124,
+      "reply_count": 28,
+      "last_comment_at": "2026-04-26T15:07:00Z",
+      "newest_thread_at": "2026-03-10T09:22:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/95pq3y/just_got_a_jove_request/"
+      ],
+      "rank": 6
+    },
+    {
+      "sentiment": "negative",
+      "theme": "access_paywall",
+      "journal": "JoVE",
+      "thread_count": 6,
+      "comment_count": 18,
+      "upvote_sum": 142,
+      "reply_count": 24,
+      "last_comment_at": "2026-05-08T20:14:00Z",
+      "newest_thread_at": "2026-04-02T11:51:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/",
+        "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/"
+      ],
+      "rank": 7
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "legitimacy",
+      "journal": "JoVE",
+      "thread_count": 11,
+      "comment_count": 34,
+      "upvote_sum": 219,
+      "reply_count": 52,
+      "last_comment_at": "2026-05-13T08:30:00Z",
+      "newest_thread_at": "2026-04-11T14:25:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/",
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/",
+        "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/"
+      ],
+      "rank": 1
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "peer_review_quality",
+      "journal": "JoVE",
+      "thread_count": 9,
+      "comment_count": 28,
+      "upvote_sum": 167,
+      "reply_count": 43,
+      "last_comment_at": "2026-05-06T17:48:00Z",
+      "newest_thread_at": "2026-03-20T12:14:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/",
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/"
+      ],
+      "rank": 2
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "methodology_focus",
+      "journal": "JoVE",
+      "thread_count": 7,
+      "comment_count": 21,
+      "upvote_sum": 134,
+      "reply_count": 31,
+      "last_comment_at": "2026-04-29T13:02:00Z",
+      "newest_thread_at": "2026-03-05T10:18:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/",
+        "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/"
+      ],
+      "rank": 3
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "reputation_with_pis",
+      "journal": "JoVE",
+      "thread_count": 6,
+      "comment_count": 17,
+      "upvote_sum": 98,
+      "reply_count": 26,
+      "last_comment_at": "2026-04-22T11:35:00Z",
+      "newest_thread_at": "2026-02-14T15:43:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/",
+        "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/"
+      ],
+      "rank": 4
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "peer_journal_comparison",
+      "journal": "JoVE",
+      "thread_count": 5,
+      "comment_count": 16,
+      "upvote_sum": 89,
+      "reply_count": 22,
+      "last_comment_at": "2026-05-01T19:24:00Z",
+      "newest_thread_at": "2026-03-28T08:09:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/",
+        "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/"
+      ],
+      "rank": 5
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "author_cv_value",
+      "journal": "JoVE",
+      "thread_count": 4,
+      "comment_count": 13,
+      "upvote_sum": 71,
+      "reply_count": 18,
+      "last_comment_at": "2026-04-17T14:51:00Z",
+      "newest_thread_at": "2026-02-09T11:27:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/"
+      ],
+      "rank": 6
+    },
+    {
+      "sentiment": "positive",
+      "theme": "video_format",
+      "journal": "JoVE",
+      "thread_count": 10,
+      "comment_count": 32,
+      "upvote_sum": 247,
+      "reply_count": 41,
+      "last_comment_at": "2026-05-11T16:22:00Z",
+      "newest_thread_at": "2026-04-15T13:09:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/",
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/",
+        "https://www.reddit.com/r/AskAcademia/comments/95pq3y/just_got_a_jove_request/"
+      ],
+      "rank": 1
+    },
+    {
+      "sentiment": "positive",
+      "theme": "reproducibility_value",
+      "journal": "JoVE",
+      "thread_count": 8,
+      "comment_count": 24,
+      "upvote_sum": 198,
+      "reply_count": 33,
+      "last_comment_at": "2026-05-07T09:18:00Z",
+      "newest_thread_at": "2026-03-30T14:42:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/",
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/"
+      ],
+      "rank": 2
+    },
+    {
+      "sentiment": "positive",
+      "theme": "production_experience",
+      "journal": "JoVE",
+      "thread_count": 5,
+      "comment_count": 14,
+      "upvote_sum": 132,
+      "reply_count": 19,
+      "last_comment_at": "2026-04-24T11:36:00Z",
+      "newest_thread_at": "2026-03-18T16:08:00Z",
+      "thread_urls": [
+        "https://www.reddit.com/r/AskAcademia/comments/95pq3y/just_got_a_jove_request/",
+        "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/"
+      ],
+      "rank": 3
+    }
+  ],
+  "voice_published": [
+    {
+      "sentiment": "negative",
+      "theme": "aggressive_marketing",
+      "product_attribution": "journal",
+      "author": "anonPostdoc_42",
+      "permalink": "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/k7a3xyz/",
+      "body": "JoVE fascinates me in that they have historically published really useful material, but have dogshit editorial and marketing practices. I once filled out a survey for a JoVE marketer about how I could use JoVE in my teaching. They used my responses to spoof an email from me to my librarian requesting that we subscribe.",
+      "score": 412,
+      "created_utc": "2026-04-12T17:23:00Z",
+      "curated_at": "2026-05-19T14:22:00Z",
+      "curator_note": "Strongest single anecdote in the corpus. Specific harm, first-person, story arc — exactly the kind of thing a journalist would lead with."
+    },
+    {
+      "sentiment": "negative",
+      "theme": "institutional_access",
+      "product_attribution": "journal",
+      "author": "lit0st_lab",
+      "permalink": "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/e6gp2bq/",
+      "body": "Apparently they increased their subscription cost by 45% two years in a row, which is pretty insane. We actually straight up unsubscribed this year. It really is a shame, because their protocols tend to be fantastic.",
+      "score": 287,
+      "created_utc": "2026-03-22T09:14:00Z",
+      "curated_at": "2026-05-19T14:25:00Z",
+      "curator_note": "Concrete number + mixed sentiment (price-negative, content-positive). Shows JoVE's bind: good product, pricing hostility."
+    },
+    {
+      "sentiment": "negative",
+      "theme": "author_fees",
+      "product_attribution": "journal",
+      "author": "parrotlunaire",
+      "permalink": "https://www.reddit.com/r/AskAcademia/comments/1d9dnze/guest_editing_for_jove/l7t4r2a/",
+      "body": "They charge several thousand bucks to help produce your video, then it gets locked up behind a subscription payment wall. Meanwhile there is no original research finding being reported so the benefit to your CV is minimal.",
+      "score": 198,
+      "created_utc": "2026-02-28T14:08:00Z",
+      "curated_at": "2026-05-19T14:27:00Z",
+      "curator_note": "Tight three-theme argument — fees, paywall, CV. Reads like a CV calculus pitch deck."
+    },
+    {
+      "sentiment": "negative",
+      "theme": "peer_review_quality",
+      "product_attribution": "journal",
+      "author": "jovethrowaway",
+      "permalink": "https://www.reddit.com/r/AskAcademia/comments/29o6fu/jove_is_this_legit/cipt4ax/",
+      "body": "Their mission is to crank out as many videos as they can so they can collect publishing fees and increase their number of articles. They don't have an impact factor and really aren't very discriminating in what they accept, which I think has a dilutive effect.",
+      "score": 156,
+      "created_utc": "2026-01-15T10:42:00Z",
+      "curated_at": "2026-05-19T14:30:00Z",
+      "curator_note": "Insider perspective (former JoVE employee per thread context). Best single articulation of the rubber-stamp critique."
+    },
+    {
+      "sentiment": "positive",
+      "theme": "reproducibility_value",
+      "product_attribution": "journal",
+      "author": "drosophila_pi",
+      "permalink": "https://www.reddit.com/r/labrats/comments/9hzpzh/jove_protocols/e6gqx9p/",
+      "body": "For protocols requiring surgeries or otherwise complex procedures, having a video guide is absolutely invaluable. I used a JoVE protocol to measure heart rate in Drosophila larvae, and I can count on one hand the number of other groups that examine Drosophila larvae heart rate.",
+      "score": 247,
+      "created_utc": "2026-03-18T13:36:00Z",
+      "curated_at": "2026-05-19T14:33:00Z",
+      "curator_note": "Strongest positive in the corpus. Specific niche-protocol benefit; counters the predatory framing with concrete value."
+    },
+    {
+      "sentiment": "positive",
+      "theme": "author_cv_value",
+      "product_attribution": "journal",
+      "author": "HeyaGames_jr_faculty",
+      "permalink": "https://www.reddit.com/r/labrats/comments/1s7vs2b/is_jove_respectable/cyz4n8e/",
+      "body": "A junior faculty in my lab became a guest editor and told me yeah it's a bit of a pain to direct a section, but hey I got my first last author paper like that and I think it's a great boost to both our careers so whatever.",
+      "score": 134,
+      "created_utc": "2026-02-20T16:48:00Z",
+      "curated_at": "2026-05-19T14:36:00Z",
+      "curator_note": "Positive counter-example to the guest-editor-spam thesis. Concrete career outcome from inside the program."
+    },
+    {
+      "sentiment": "positive",
+      "theme": "production_experience",
+      "product_attribution": "journal",
+      "author": "cag104_pi",
+      "permalink": "https://www.reddit.com/r/AskAcademia/comments/95pq3y/just_got_a_jove_request/e3rwhfx/",
+      "body": "They have an actual team come into your lab and professionally record you over several days. For methods papers I think the video format is great. There is obviously also a paper that must be written.",
+      "score": 112,
+      "created_utc": "2026-03-08T11:24:00Z",
+      "curated_at": "2026-05-19T14:38:00Z",
+      "curator_note": "Operational detail of the production process — useful for understanding why authors who go through it tend to come back."
+    },
+    {
+      "sentiment": "neutral",
+      "theme": "legitimacy",
+      "product_attribution": "journal",
+      "author": "fluffy_antelope_3395",
+      "permalink": "https://www.reddit.com/r/AskAcademia/comments/1nkbbm3/special_issue_invitation_form_jove_they_cant_be/k7c9pwm/",
+      "body": "It was a different landscape when the journal started nearly 20 years ago. The idea of a video protocol is good considering how much info can be/is missing from published protocols. But the amount of overlap on basic/standard protocols is a cash cow. About 10 years ago it ramped up its output and it's all about profit.",
+      "score": 178,
+      "created_utc": "2026-04-04T08:51:00Z",
+      "curated_at": "2026-05-19T14:41:00Z",
+      "curator_note": "Historical-frame critique. Useful because it concedes the founding thesis while indicting the current operating model."
+    }
+  ]
+}
