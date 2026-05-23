@@ -391,7 +391,7 @@ def _rank_rows(rows: list[FrequencyRow]) -> list[FrequencyRow]:
 
 # Matches the start of a Voice-block heading. Used both to identify
 # where a block begins and to parse the heading fields once isolated.
-_BLOCK_START_RE = re.compile(r"^##\s+\S+\s+·\s+[A-Z]+\s+·\s+.+$", re.MULTILINE)
+_BLOCK_START_RE = re.compile(r"^##\s+\S.*?\s+·\s+[A-Z]+\s+·\s+.+$", re.MULTILINE)
 _HEADING_RE = re.compile(
     r"^##\s+(?P<journal>[^·\n]+?)\s+·\s+(?P<sentiment>[A-Z]+)\s+·\s+(?P<themes>.+)$",
     re.MULTILINE,

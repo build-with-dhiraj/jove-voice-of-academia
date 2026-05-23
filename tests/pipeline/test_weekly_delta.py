@@ -573,3 +573,75 @@ def test_force_time_horizon_bad_iso_returns_exit_1(
     assert code == 1
     err = capsys.readouterr().err
     assert "ISO 8601" in err
+
+
+def test_out_of_scope_thread_not_appended_to_jsonl(
+    tmp_work: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A disambiguate-rejected thread MUST NOT be written to ``threads.jsonl``.
+
+    Regression guard for the v1-cleanup fix at ``weekly_delta.py:672``:
+    the orchestrator wraps every disambiguate rejection reason with the
+    ``skipped:`` prefix (e.g. ``skipped:subreddit_blacklist``), so the
+    JSONL-append guard must use ``startswith("skipped:")`` rather than
+    an exact match on a single literal reason — otherwise out-of-scope
+    threads silently pollute the durable mirror.
+    """
+
+    candidates = [_make_candidate("oos0")]
+    monkeypatch.setattr(
+        weekly_delta.discover, "discover_all", lambda **_kw: iter(candidates)
+    )
+
+    rejected_thread = _make_thread("oos0", n_comments=1)
+    monkeypatch.setattr(
+        weekly_delta.fetch, "fetch_thread", lambda _c: rejected_thread
+    )
+    # Disambiguate rejects the thread with a real (non-"not_jove") reason.
+    monkeypatch.setattr(
+        weekly_delta.disambiguate,
+        "is_in_scope",
+        lambda _t: (False, "subreddit_blacklist"),
+    )
+    # tag/store should not be reached because process_one_thread returns
+    # early on rejection — but stub them defensively so a regression in
+    # that early-return doesn't pollute the test environment.
+    monkeypatch.setattr(
+        weekly_delta.tag,
+        "tag_comment",
+        lambda _c, _t: pytest.fail("tag_comment must not be called for OOS"),
+    )
+    monkeypatch.setattr(
+        weekly_delta.store, "upsert_thread", lambda *_a, **_kw: None
+    )
+    monkeypatch.setattr(
+        weekly_delta.store, "write_voice_candidates", lambda *_a, **_kw: None
+    )
+    monkeypatch.setattr(
+        weekly_delta.tag,
+        "estimate_mega_backfill_cost",
+        lambda **_kw: _fake_forecast(0.10),
+    )
+    monkeypatch.setattr(
+        weekly_delta,
+        "build_and_write_aggregate",
+        lambda **_kw: {
+            "total_threads": 0,
+            "total_comments": 0,
+            "aggregate_path": str(tmp_work / "latest.json"),
+        },
+    )
+
+    args = weekly_delta.parse_args(["--max-cost-usd", "5", "--quiet"])
+    code = weekly_delta.run(args)
+    assert code == 0
+
+    # The rejected thread must NOT be in threads.jsonl.
+    threads_path = weekly_delta.THREADS_PATH
+    if threads_path.exists():
+        content = threads_path.read_text(encoding="utf-8").strip()
+        assert content == "", (
+            f"threads.jsonl should be empty for OOS-only run; got: {content!r}"
+        )
+    # else: file doesn't exist at all — also acceptable.

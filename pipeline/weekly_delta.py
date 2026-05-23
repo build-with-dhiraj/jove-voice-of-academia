@@ -669,7 +669,10 @@ def run(args: argparse.Namespace) -> int:
             thread_id, status, new_tagged, thread = process_one_thread(
                 cand, already_tagged_comment_ids=already_tagged
             )
-            if thread is not None and status != "skipped:not_jove":
+            # process_one_thread wraps every disambiguate rejection reason
+            # with a ``skipped:`` prefix (see line 364), so the JSONL mirror
+            # excludes ALL out-of-scope threads — not just one specific reason.
+            if thread is not None and not status.startswith("skipped:"):
                 append_thread_to_jsonl(thread)
             if new_tagged:
                 append_tagged_comments_to_jsonl(new_tagged)

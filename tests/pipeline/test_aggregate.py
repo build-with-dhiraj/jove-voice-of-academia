@@ -967,3 +967,53 @@ def test_aggregate_field_set() -> None:
         "voice_published",
     }
     assert set(Aggregate.model_fields) == expected
+
+
+def test_block_start_regex_handles_multi_word_journal(tmp_path: Path) -> None:
+    """A Voice block whose journal header has a space (e.g. ``Unknown journal``)
+    must parse — not silently disappear from the panel.
+
+    Regression guard for the v1-cleanup fix at ``aggregate.py:394``:
+    ``_BLOCK_START_RE`` previously used ``\\S+`` for the journal segment,
+    which only matched non-whitespace runs. When ``TaggedComment.journal_named``
+    is ``None``, ``pipeline.store`` writes ``"Unknown journal"`` as the
+    fallback — a two-word value the old regex could not match. Loosened
+    to ``\\S.*?`` to mirror ``voice_curate.py``'s convention.
+    """
+
+    pub_dir = tmp_path / "Published"
+    pub_dir.mkdir()
+    (pub_dir / "2026-W22.md").write_text(
+        """\
+---
+updated: 2026-05-19
+---
+
+# Voice Published
+
+## Unknown journal · POSITIVE · video_format:positive
+**Author**: u/some_user
+**Thread**: [Title](https://www.reddit.com/r/labrats/comments/abc/_/)
+**Comment**: [link](https://www.reddit.com/r/labrats/comments/abc/_/cmt_id/)
+**Date**: 2026-04-15
+**Score**: 55
+**Voice rubric**: Specific niche-protocol benefit
+
+> The videos are genuinely useful when you can't find a written protocol.
+
+---
+""",
+        encoding="utf-8",
+    )
+
+    rows = parse_voice_published_dir(pub_dir)
+    assert len(rows) == 1, (
+        f"Expected one row from multi-word journal header; got {len(rows)}"
+    )
+    row = rows[0]
+    assert row.sentiment == "positive"
+    assert row.theme == "video_format"
+    # Journal "Unknown journal" is not the default ``JoVE`` → out-of-scope
+    # per the v1 product_attribution clamp.
+    assert row.product_attribution == "out-of-scope"
+    assert row.author == "some_user"
