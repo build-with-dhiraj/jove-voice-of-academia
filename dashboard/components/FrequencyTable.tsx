@@ -7,6 +7,7 @@ import type {
 
 import { SentimentBadge } from "./SentimentBadge";
 import { ThemeRow } from "./ThemeRow";
+import { GradientText } from "./ui/GradientText";
 import { indexThemes } from "@/lib/data";
 
 // The frequency table only ever sees 3-value sentiment — per spec D1 a
@@ -119,9 +120,13 @@ export function FrequencyTable({
             <div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-3">
               <div className="flex items-center gap-3">
                 <SentimentBadge sentiment={sentiment} />
-                <span className="text-sm text-muted-foreground">
+                <GradientText
+                  sentiment={sentiment}
+                  as="h2"
+                  className="font-heading text-lg font-semibold tracking-tight"
+                >
                   {SENTIMENT_DESCRIPTION[sentiment]}
-                </span>
+                </GradientText>
               </div>
               <span className="font-mono text-xs tabular-nums text-muted-foreground">
                 {bucketRows.length} theme{bucketRows.length === 1 ? "" : "s"}

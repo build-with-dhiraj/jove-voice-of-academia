@@ -57,6 +57,42 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+  /*
+   * Sentiment-bucket gradient tokens (v1.2/exp/gradient-buckets).
+   *
+   * Used by <GradientText sentiment={…}> in components/ui/GradientText.tsx
+   * to render the three FrequencyTable bucket headers ("What academia
+   * values / debates / dislikes about JoVE") as visually-distinct surfaces
+   * instead of identical badge+heading pairs.
+   *
+   * Endpoint colors are chosen to hit ≥4.5:1 contrast against the white
+   * page background even at the *brightest* stop of each gradient — the
+   * 700-stop tones used in SentimentBadge are the lower bounds. We never
+   * stray lighter than the 600 stop so that background-clip:text doesn't
+   * silently sink below WCAG AA when the gradient mid-band hits.
+   *
+   * Negative bucket avoids pure red specifically so it composes cleanly
+   * with the Antigravity hero's `#FF9FFC` pink — rose+coral instead of
+   * crimson.
+   */
+  --sentiment-positive-grad: linear-gradient(
+    90deg,
+    #047857 0%,
+    /* emerald-700 */ #0f766e 50%,
+    /* teal-700 */ #0e7490 100% /* cyan-700 */
+  );
+  --sentiment-neutral-grad: linear-gradient(
+    90deg,
+    #334155 0%,
+    /* slate-700 */ #1e40af 60%,
+    /* blue-800 */ #3730a3 100% /* indigo-800 */
+  );
+  --sentiment-negative-grad: linear-gradient(
+    90deg,
+    #be185d 0%,
+    /* pink-700 */ #be123c 50%,
+    /* rose-700 */ #c2410c 100% /* orange-700 */
+  );
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -92,6 +128,25 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
+  /* Dark-mode sentiment gradients — lighter stops (300/400) for AA on dark bg */
+  --sentiment-positive-grad: linear-gradient(
+    90deg,
+    #6ee7b7 0%,
+    /* emerald-300 */ #5eead4 50%,
+    /* teal-300 */ #67e8f9 100% /* cyan-300 */
+  );
+  --sentiment-neutral-grad: linear-gradient(
+    90deg,
+    #cbd5e1 0%,
+    /* slate-300 */ #93c5fd 60%,
+    /* blue-300 */ #a5b4fc 100% /* indigo-300 */
+  );
+  --sentiment-negative-grad: linear-gradient(
+    90deg,
+    #fda4af 0%,
+    /* rose-300 */ #fdba74 50%,
+    /* orange-300 */ #f9a8d4 100% /* pink-300 */
+  );
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
