@@ -1,0 +1,9 @@
+{
+  "namespace": "social-listening",
+  "index": "jove-memory",
+  "record_count": 133,
+  "expected_count": 133,
+  "upsert_method": "mcp__pinecone__upsert-records (3 batches of 50/50/33)",
+  "upsert_completed_at": "2026-05-24T19:30:00Z",
+  "embedding_model": "multilingual-e5-large"
+}
