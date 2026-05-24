@@ -59,21 +59,27 @@ const SplitTextDynamic = dynamic(() => import("./SplitText"), {
 });
 
 export default function SplitTextHeader(props: SplitTextProps) {
-  // Tri-state: null = SSR / pre-mount unknown, true = reduced, false = full motion.
-  // We must not assume either branch on the server — both have to render the same
-  // initial HTML, then the client takes over once we know the user's preference.
+  // Tri-state: null = SSR / pre-hydration, true = reduced, false = full motion.
   //
-  // The initial value is derived synchronously via the useState initializer
-  // (runs once per mount, never on the server) rather than written from inside
-  // an effect, so it doesn't trip React 19's `set-state-in-effect` rule.
-  const [reduced, setReduced] = useState<boolean | null>(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return null;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+  // SSR-safety contract: the FIRST client render MUST emit the same HTML as
+  // the server. That means the useState initializer must NOT read
+  // `window.matchMedia` — even with a `typeof window` guard, the initializer
+  // also runs on the client during hydration and would diverge from the
+  // server's `null` value, swapping <StaticHeading> for <SplitTextDynamic />
+  // (which resolves to `null` because `loading: () => null`). That mismatch
+  // is what flagged in the v1.2 console error on `/`.
+  //
+  // Pattern mirrors `lib/perf.ts:useMediaQuery` and `ui/CountUp.tsx`'s
+  // `useSyncExternalStore` with a `() => false` server snapshot: pin the
+  // first paint to a constant matching SSR, then transition via useEffect
+  // *after* hydration is complete.
+  const [reduced, setReduced] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Sync to the actual user preference once we're past hydration.
+    setReduced(mq.matches);
     const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
