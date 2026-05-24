@@ -129,12 +129,12 @@ export default async function HomePage() {
           </p>
           <p>
             <a
-              href="https://github.com/in-quiz-ition/jove-voice-of-academia"
+              href="https://github.com/build-with-dhiraj/jove-voice-of-academia"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-foreground underline-offset-4 hover:underline"
             >
-              github.com/in-quiz-ition/jove-voice-of-academia
+              github.com/build-with-dhiraj/jove-voice-of-academia
             </a>
           </p>
         </footer>
