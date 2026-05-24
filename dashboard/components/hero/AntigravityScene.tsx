@@ -256,6 +256,20 @@ export default function AntigravityScene(props: AntigravityProps) {
     <Canvas
       camera={{ position: [0, 0, 50], fov: 35 }}
       dpr={[1, 1.5]}
+      // Route pointer events through `<body>` (window-equivalent for R3F
+      // web Canvas, which requires an HTMLElement). The hero <header> at
+      // z-10 sits above the canvas at z-0, so default pointer-event
+      // attachment on the canvas DOM element would never receive any
+      // motion. Sourcing events from body bypasses the z-stacking issue.
+      // Uses `eventPrefix="client"` so pointer math is in viewport-client
+      // coords (matches `state.pointer` expectations regardless of where
+      // the canvas itself is positioned).
+      eventSource={
+        typeof document !== "undefined"
+          ? (document.body as HTMLElement)
+          : undefined
+      }
+      eventPrefix="client"
       // Use `demand` + manual invalidate-via-frameloop-toggle.
       // When `paused` true → frameloop="never" stops RAF entirely.
       frameloop={paused ? "never" : "always"}
