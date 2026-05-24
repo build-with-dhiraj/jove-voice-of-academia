@@ -1,4 +1,4 @@
-import type { ElementType, ReactNode } from "react";
+import { createElement, type ElementType, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 import type { ThemeSentiment } from "@/lib/types";
@@ -53,9 +53,13 @@ export function GradientText({
   as: Component = "span",
   className,
 }: GradientTextProps) {
-  return (
-    <Component
-      className={cn(
+  // React.createElement avoids a TypeScript variance issue with JSX <Tag>
+  // children inference when Tag is `ElementType` and the compile graph
+  // includes ambient JSX module augmentations (@react-three/fiber via three).
+  return createElement(
+    Component,
+    {
+      className: cn(
         // background-clip:text + transparent fill is what produces the
         // "gradient inside glyph shapes" effect. The bg-clip-text Tailwind
         // utility sets both `background-clip: text` and the WebKit prefix.
@@ -65,10 +69,9 @@ export function GradientText({
         // because the linear-gradient defaults to the text box width.
         "[background-size:100%_100%]",
         className,
-      )}
-      style={{ backgroundImage: SENTIMENT_GRADIENTS[sentiment] }}
-    >
-      {children}
-    </Component>
+      ),
+      style: { backgroundImage: SENTIMENT_GRADIENTS[sentiment] },
+    },
+    children,
   );
 }

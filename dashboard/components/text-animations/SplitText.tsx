@@ -208,16 +208,18 @@ const SplitText: React.FC<SplitTextProps> = ({
     willChange: "transform, opacity",
   };
   const classes = `split-parent ${className}`.trim();
-  const Tag = tag as React.ElementType;
 
-  return (
-    <Tag
-      ref={ref as React.RefObject<HTMLElement>}
-      style={style}
-      className={classes}
-    >
-      {text}
-    </Tag>
+  // React.createElement avoids a TypeScript variance issue with JSX <Tag>
+  // children inference when Tag is `React.ElementType` and the compile graph
+  // includes ambient JSX module augmentations (@react-three/fiber via three).
+  return React.createElement(
+    tag as React.ElementType,
+    {
+      ref: ref as React.RefObject<HTMLElement>,
+      style,
+      className: classes,
+    },
+    text,
   );
 };
 

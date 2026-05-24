@@ -18,7 +18,7 @@
  */
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import type { SplitTextProps } from "./SplitText";
 
@@ -32,19 +32,21 @@ function StaticHeading({
   tag = "h1",
   textAlign = "left",
 }: Pick<SplitTextProps, "text" | "className" | "tag" | "textAlign">) {
-  const Tag = (tag ?? "h1") as React.ElementType;
-  return (
-    <Tag
-      className={className}
-      style={{
+  // React.createElement avoids a TypeScript variance issue with JSX <Tag>
+  // children inference when Tag is `React.ElementType` and the compile graph
+  // includes ambient JSX module augmentations (@react-three/fiber via three).
+  return React.createElement(
+    (tag ?? "h1") as React.ElementType,
+    {
+      className,
+      style: {
         textAlign,
         display: "inline-block",
         whiteSpace: "normal",
         wordWrap: "break-word",
-      }}
-    >
-      {text}
-    </Tag>
+      },
+    },
+    text,
   );
 }
 
