@@ -29,10 +29,6 @@ function themeLabel(themeId: string, themeDef: ThemeDef | undefined): string {
   return themeDef?.label ?? themeId;
 }
 
-function themeDescription(themeDef: ThemeDef | undefined): string | null {
-  return themeDef?.description ?? null;
-}
-
 interface ThemeRowProps {
   row: FrequencyRow;
   themeDef: ThemeDef | undefined;
@@ -45,14 +41,13 @@ interface ThemeRowProps {
 
 /**
  * A single row of the FrequencyTable, expandable inline (native <details>)
- * to reveal: (1) full theme description, (2) up to 3 curated voice excerpts
- * for this theme, (3) supporting thread URLs as a secondary section.
+ * to reveal: (1) up to 3 curated voice excerpts for this theme, (2) supporting
+ * thread URLs as a secondary section.
  *
  * No client-side JS required — the disclosure is a native <details>/<summary>.
  */
 export function ThemeRow({ row, themeDef, voices }: ThemeRowProps) {
   const label = themeLabel(row.theme, themeDef);
-  const description = themeDescription(themeDef);
   // Cap inline excerpts at MAX_VOICES_PER_THEME so a high-volume theme can't
   // explode a row vertically — D's curation already orders by editorial
   // preference, so the first N are the strongest.
@@ -62,14 +57,9 @@ export function ThemeRow({ row, themeDef, voices }: ThemeRowProps) {
     <details className="group/row border-b border-border last:border-b-0">
       <summary className="grid cursor-pointer list-none grid-cols-[1.5fr_repeat(4,minmax(0,0.6fr))_repeat(2,minmax(0,0.9fr))_auto] items-center gap-3 px-3 py-3 transition-colors hover:bg-muted/40 [&::-webkit-details-marker]:hidden">
         <div className="flex min-w-0 flex-col">
-          <span className="truncate text-sm font-medium text-foreground">
+          <span className="whitespace-normal break-words text-sm font-medium text-foreground">
             {label}
           </span>
-          {description ? (
-            <span className="line-clamp-1 text-xs text-muted-foreground">
-              {description}
-            </span>
-          ) : null}
         </div>
         <span className="text-right font-mono text-sm tabular-nums text-foreground">
           {row.thread_count}
@@ -106,17 +96,7 @@ export function ThemeRow({ row, themeDef, voices }: ThemeRowProps) {
       </summary>
 
       <div className="flex flex-col gap-5 bg-muted/30 px-3 py-4 sm:px-5 sm:py-5">
-        {/* Section 1 — full theme description (no line-clamp) */}
-        {description ? (
-          <div className="flex flex-col gap-1.5">
-            <p className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
-              About this theme
-            </p>
-            <p className="text-sm leading-6 text-foreground">{description}</p>
-          </div>
-        ) : null}
-
-        {/* Section 2 — top voice excerpts (or empty state) */}
+        {/* Section 1 — top voice excerpts (or empty state) */}
         <div className="flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-3">
             <p className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
@@ -145,7 +125,7 @@ export function ThemeRow({ row, themeDef, voices }: ThemeRowProps) {
           )}
         </div>
 
-        {/* Section 3 — supporting threads, demoted to secondary */}
+        {/* Section 2 — supporting threads, demoted to secondary */}
         <div className="flex flex-col gap-2 border-t border-border/60 pt-4">
           <p className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
             Supporting Reddit threads ({row.thread_urls.length})
