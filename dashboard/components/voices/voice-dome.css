@@ -37,6 +37,17 @@
   isolation: isolate;
 }
 
+@media (prefers-color-scheme: dark) {
+  .dome-surface {
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        oklch(0.21 0 0),
+        oklch(0.14 0 0) 80%
+      );
+  }
+}
+
 .dark .dome-surface {
   background:
     radial-gradient(
@@ -120,6 +131,16 @@
   );
 }
 
+@media (prefers-color-scheme: dark) {
+  .dome-surface .overlay {
+    background-image: radial-gradient(
+      circle at 50% 50%,
+      transparent 60%,
+      oklch(0.14 0 0) 100%
+    );
+  }
+}
+
 .dark .dome-surface .overlay {
   background-image: radial-gradient(
     circle at 50% 50%,
@@ -174,6 +195,12 @@
   z-index: 5;
   pointer-events: none;
   background: linear-gradient(to bottom, oklch(0.99 0 0), transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dome-surface .edge-fade {
+    background: linear-gradient(to bottom, oklch(0.14 0 0), transparent);
+  }
 }
 
 .dark .dome-surface .edge-fade {

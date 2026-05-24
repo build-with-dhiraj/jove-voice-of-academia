@@ -76,7 +76,7 @@ export function VoiceCard({ card, themeDef }: VoiceCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-foreground underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            aria-label="Open original Reddit comment in a new tab"
+            aria-label="Open on Reddit (opens in new tab)"
           >
             Open on Reddit
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
