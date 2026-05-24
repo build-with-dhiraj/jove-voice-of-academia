@@ -76,8 +76,8 @@ interface FrequencyTableProps {
 /**
  * The CEO's primary scanning surface: every (sentiment × theme) row in the
  * corpus, breadth-first ranked, grouped by sentiment. Each row expands inline
- * to show the full theme description, the top curated voice excerpts for
- * that theme, and supporting Reddit threads.
+ * to show the top curated voice excerpts for that theme and supporting
+ * Reddit threads.
  *
  * Server component. Static at build time (ISR — see app/page.tsx).
  */
@@ -133,9 +133,12 @@ export function FrequencyTable({
               </span>
             </div>
 
-            {/* Column header — grid layout matches ThemeRow exactly */}
+            {/* Column header — visual labels for the disclosure rows below.
+                aria-hidden because the same labels are repeated in each
+                disclosure row's accessible name, so screen readers don't
+                need them announced separately. CSS grid matches ThemeRow. */}
             <div
-              role="row"
+              aria-hidden="true"
               className="grid grid-cols-[1.5fr_repeat(4,minmax(0,0.6fr))_repeat(2,minmax(0,0.9fr))_auto] items-center gap-3 border-b border-border bg-muted/20 px-3 py-2 text-xs font-medium uppercase tracking-wide text-muted-foreground"
             >
               <span>Theme</span>
@@ -145,10 +148,17 @@ export function FrequencyTable({
               <span className="text-right">Replies</span>
               <span className="text-right">Last comment</span>
               <span className="text-right">Newest thread</span>
-              <span className="size-3" aria-hidden="true" />
+              <span className="size-3" />
             </div>
 
-            <div role="rowgroup">
+            {/* Disclosure list — each row is a native <details>/<summary> that
+                screen readers announce as an expandable disclosure widget.
+                Wrapped in role="group" so the sentiment label is the
+                accessible name for the list. */}
+            <div
+              role="group"
+              aria-label={`${SENTIMENT_DESCRIPTION[sentiment]} — theme list`}
+            >
               {bucketRows.map((row) => (
                 <ThemeRow
                   key={`${row.sentiment}-${row.theme}-${row.journal}`}

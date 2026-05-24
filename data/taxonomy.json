@@ -6,7 +6,7 @@
   "themes": [
     {
       "id": "access_paywall",
-      "label": "Reader access / paywall friction",
+      "label": "Access & paywall friction",
       "description": "Reader-side friction accessing JoVE videos or protocols. Paywall complaints, sci-hub attempts, requests for access help from peers, university VPN workarounds, frustration that videos require subscription.",
       "example_phrasings": [
         "Does anyone have a JoVE account/can help with getting a video?",
@@ -19,7 +19,7 @@
     },
     {
       "id": "guest_editor_outreach",
-      "label": "Guest editor / special issue invitations",
+      "label": "Guest editor invitations",
       "description": "JoVE inviting someone to be a guest editor of a special issue. Includes complaints about spam-feel, fishiness, lack of editorial autonomy.",
       "example_phrasings": [
         "JoVE Guest Editor invitation",
@@ -32,7 +32,7 @@
     },
     {
       "id": "author_outreach",
-      "label": "Author solicitation / article-conversion invitations",
+      "label": "Author solicitation / spam",
       "description": "JoVE inviting someone to turn an existing paper into a JoVE video, or to submit a new manuscript directly. Distinct from guest_editor_outreach: this is about your own paper as author, not editing others' work.",
       "example_phrasings": [
         "Just got a JoVE request",
@@ -59,7 +59,7 @@
     },
     {
       "id": "reputation_with_pis",
-      "label": "Reputation among senior researchers and PIs",
+      "label": "PI & advisor opinion",
       "description": "How senior researchers, advisors, and PIs view JoVE; their guidance to junior researchers about whether to publish there; the 'it's not Nature' framing.",
       "example_phrasings": [
         "Boss was a bit mimimi because it is not NATURE",
@@ -72,7 +72,7 @@
     },
     {
       "id": "video_format",
-      "label": "Video-as-format value, suitability, watchability",
+      "label": "Video format value",
       "description": "Discussion of the video medium itself — whether video helps for protocols, format suitability for one's research type, watchability of seeing oneself on video, format-vs-text trade-off.",
       "example_phrasings": [
         "Love their video demonstrations of methods",
@@ -86,7 +86,7 @@
     },
     {
       "id": "author_fees",
-      "label": "Author-side publication fees",
+      "label": "Author publication fees",
       "description": "The cost JoVE charges authors to publish: ~$2,400 video production fee + $1,800 OA add-on. Includes comparison to other journals' fees.",
       "example_phrasings": [
         "High publication costs due to the entire filming process",
@@ -99,7 +99,7 @@
     },
     {
       "id": "peer_review_quality",
-      "label": "Peer-review rigor and acceptance bar",
+      "label": "Peer-review rigor",
       "description": "Quality and rigor of JoVE's peer review process, reviewer depth/engagement, perceived selectivity, rubber-stamp suspicions. ABSORBS the former acceptance_bar theme — Reddit voices conflate these in practice.",
       "example_phrasings": [
         "All our articles have to go through a rigorous peer review process",
@@ -113,7 +113,7 @@
     },
     {
       "id": "institutional_access",
-      "label": "Institutional subscriptions, library budgets, cancellations",
+      "label": "Library subscription costs",
       "description": "Library-side subscription experience, institutional licensing pricing, budget cuts, cancellation announcements, price-hike complaints.",
       "example_phrasings": [
         "Our library asked us if anyone was using them or if they could unsubscribe",
@@ -126,7 +126,7 @@
     },
     {
       "id": "methodology_focus",
-      "label": "Methodology fit / cross-disciplinary applicability",
+      "label": "Methodology fit",
       "description": "Whether JoVE is right for one's discipline or methodology, niche-protocol value, the 'protocol library vs novel-science journal' framing.",
       "example_phrasings": [
         "JoVE isn't for novel science. It's a protocol library",
@@ -139,7 +139,7 @@
     },
     {
       "id": "indexing_impact",
-      "label": "PubMed/MEDLINE indexing & impact factor",
+      "label": "Impact factor / indexing",
       "description": "Indexing in PubMed/MEDLINE, impact factor (~1.0 in 2024), citation expectations, what counts for tenure/promotion.",
       "example_phrasings": [
         "Low impact factor and high publication costs",
@@ -152,7 +152,7 @@
     },
     {
       "id": "author_cv_value",
-      "label": "Personal CV / career value of publishing in JoVE",
+      "label": "CV / career value",
       "description": "The author's own cost-benefit calculation: is publishing in JoVE worth it for MY career? Distinct from reputation_with_pis (which is advisor's verdict) — this is the individual's own math.",
       "example_phrasings": [
         "Wouldn't consider it - not worth the significant effort",
@@ -166,7 +166,7 @@
     },
     {
       "id": "aggressive_marketing",
-      "label": "Business-side sales/marketing aggression (not editorial outreach)",
+      "label": "Sales & marketing aggression",
       "description": "JoVE's BUSINESS-side marketing/sales tactics: cold-call subscription pitches, spoofed librarian emails, mutating subscription packages, repeated contact attempts to non-decision-makers. Distinct from editorial outreach (themes 2 & 3).",
       "example_phrasings": [
         "They used my responses to spoof an email from me to my librarian",
@@ -180,7 +180,7 @@
     },
     {
       "id": "production_experience",
-      "label": "Author-side video production experience",
+      "label": "Video production experience",
       "description": "The hands-on author experience of making a JoVE video: lab visits by production crew, scripting demands, days of filming, professional quality of the production team.",
       "example_phrasings": [
         "They have an actual team come into your lab and professionally record you over several days",
@@ -193,7 +193,7 @@
     },
     {
       "id": "peer_journal_comparison",
-      "label": "Comparison to other journals (MDPI, Frontiers, Nature, Cell, etc.)",
+      "label": "Comparison to MDPI / Frontiers / Nature",
       "description": "JoVE discussed alongside or compared to other publishing outlets — both predatory-ecosystem peers (MDPI, Frontiers, Springer, Elsevier) and prestige journals (Nature, Cell). Frequently appears as a cross-tag rather than primary topic.",
       "example_phrasings": [
         "Like Springer and Elsevier?",
@@ -207,7 +207,7 @@
     },
     {
       "id": "reproducibility_value",
-      "label": "Reproducibility benefit of video protocols",
+      "label": "Reproducibility benefit",
       "description": "JoVE's video format praised as a solution to research reproducibility problems — the idea that text protocols miss critical detail that video captures.",
       "example_phrasings": [
         "Innovative platform worth supporting (especially in light of some fields' reproducibility problems)",
