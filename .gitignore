@@ -34,6 +34,15 @@ data/tagged-comments.jsonl
 data/tag-cost-log.jsonl
 data/threads.jsonl
 
+# v1.3 pipeline runtime artifacts (transient discovery / Pinecone batching state)
+data/*.bak
+data/pinecone-batch-*.json
+data/pinecone-records-*.jsonl
+data/discovery-candidates-expansion-QUARANTINED.jsonl
+data/discovery-candidates-expansion-UNVALIDATED.jsonl
+# raw-comments-mega is the intermediate fetch dump; comments live structured inside threads-mega.jsonl
+data/raw-comments-mega.jsonl
+
 # IDE
 .vscode/
 .idea/

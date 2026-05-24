@@ -6,6 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.104.1",
     "firecrawl-py>=4.27.2",
+    "openai>=2.38.0",
     "pinecone>=9.0.1",
     "praw>=7.8.1",
     "pydantic>=2.13.4",

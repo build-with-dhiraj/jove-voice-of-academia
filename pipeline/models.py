@@ -279,8 +279,53 @@ class TaggedComment(BaseModel):
     tagged_by_model: str = Field(
         description=(
             "Concatenated model IDs used, "
-            "e.g. ``'claude-haiku-4-5-20251001+claude-sonnet-4-6'``."
+            "e.g. ``'claude-haiku-4-5-20251001+claude-sonnet-4-6'`` "
+            "or ``'gpt-4.1+gpt-4.1-judge'`` for the v1.3 Azure OpenAI tagger."
         )
+    )
+
+    # ---- v1.3 mega-backfill additions: confidence + LLM-as-judge --------
+    # The Phase 8 mega-backfill spec adds a second LLM call (Pass 2 judge)
+    # that re-reads Pass 1's tag and either AGREEs, DISAGREEs (with
+    # corrections), or flags low confidence. Both Pass 1 and Pass 2 emit
+    # an integer 1-5 self-confidence score. Optional fields so older
+    # tagged-comment artifacts (pre-v1.3) still validate.
+
+    confidence: int | None = Field(
+        default=None,
+        ge=1,
+        le=5,
+        description=(
+            "Pass 1 (tagger) self-reported confidence in the tag, 1-5. "
+            "1 = wild guess; 5 = high confidence. Used at curation time to "
+            "prioritize voice-candidate review queues."
+        ),
+    )
+    judge_verdict: str | None = Field(
+        default=None,
+        description=(
+            "Pass 2 (judge) verdict on Pass 1's tag. One of ``'agree'``, "
+            "``'disagree-sentiment'``, ``'disagree-theme'``, "
+            "``'disagree-voice'``, ``'disagree-multiple'``. ``None`` only "
+            "if the judge call failed."
+        ),
+    )
+    judge_confidence: int | None = Field(
+        default=None,
+        ge=1,
+        le=5,
+        description=(
+            "Pass 2 (judge) self-reported confidence in its own verdict, "
+            "1-5. The acceptance gate: judgments with confidence < 4 are "
+            "flagged for human review."
+        ),
+    )
+    judge_rationale: str | None = Field(
+        default=None,
+        description=(
+            "One-sentence explanation from the judge of why it agreed or "
+            "disagreed with Pass 1. Audit trail for judge drift."
+        ),
     )
 
 
