@@ -19,12 +19,14 @@
  */
 
 import {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
   type CSSProperties,
 } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useGesture } from "@use-gesture/react";
 
 import type { Sentiment, VoicePanelRow } from "@/lib/types";
@@ -108,7 +110,25 @@ const DESKTOP_SEGMENTS = 15;
 const MOBILE_SEGMENTS = 10;
 
 export default function VoiceDome({ voices }: VoiceDomeProps) {
-  const [filter, setFilter] = useState<SentimentFilter>("all");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const filterFromUrl =
+    (searchParams.get("sentiment") as SentimentFilter) || "all";
+  const [filter, setFilterState] = useState<SentimentFilter>(filterFromUrl);
+  const setFilter = useCallback(
+    (value: SentimentFilter) => {
+      setFilterState(value);
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "all") {
+        params.delete("sentiment");
+      } else {
+        params.set("sentiment", value);
+      }
+      const qs = params.toString();
+      router.replace(`/voices${qs ? `?${qs}` : ""}`, { scroll: false });
+    },
+    [router, searchParams],
+  );
   const isMobile = useIsMobile();
   const reducedMotion = useReducedMotion();
 
@@ -311,6 +331,7 @@ function DomeSurface({
       const viewerPad = Math.max(8, Math.round(minDim * padFactor));
       root.style.setProperty("--radius", `${Math.round(radius)}px`);
       root.style.setProperty("--viewer-pad", `${viewerPad}px`);
+      root.setAttribute("data-ready", "true");
       applyTransform(rotationRef.current.x, rotationRef.current.y);
     });
     ro.observe(root);

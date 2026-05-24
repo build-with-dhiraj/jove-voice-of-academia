@@ -35,7 +35,7 @@ const LOCKED_PROPS: Omit<AntigravityProps, "count" | "paused"> = {
   waveSpeed: 1.5,
   waveAmplitude: 2.3,
   particleSize: 0.5,
-  lerpSpeed: 0.01,
+  lerpSpeed: 0.06,
   color: PARTICLE_COLOR,
   autoAnimate: false,
   particleVariance: 1,
