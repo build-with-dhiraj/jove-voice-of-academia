@@ -1,0 +1,203 @@
+/*
+ * VoiceDome — CSS forked from reactbits.dev DomeGallery v1.x.
+ *
+ * Differences from canonical:
+ *   - No `--tile-radius`/`--enlarge-radius` indirection (text tiles use a
+ *     fixed `border-radius`, no zoom-open animation)
+ *   - No `image-filter` / grayscale machinery
+ *   - Added `prefers-reduced-motion: reduce` guards (the JS bails before
+ *     mount, but this catches user preference flipped mid-session)
+ *   - Stronger `-webkit-backface-visibility` everywhere (Safari was flickering
+ *     during dev iterations)
+ *
+ * Sizes drive the lattice: tile width  = circumference / segments-x
+ *                          tile height = circumference / segments-y
+ * — defaults give roughly square tiles. We pass sizeX=3 sizeY=2 in JS so
+ * each face is wider than tall (text needs the room).
+ */
+
+.dome-surface {
+  position: relative;
+  width: 100%;
+  /* Dome target height. Mobile gets a shorter dome to keep above the fold. */
+  height: 460px;
+  --radius: 520px;
+  --viewer-pad: 72px;
+  --circ: calc(var(--radius) * 3.14);
+  --rot-y: calc((360deg / var(--segments-x)) / 2);
+  --rot-x: calc((360deg / var(--segments-y)) / 2);
+  --item-width: calc(var(--circ) / var(--segments-x));
+  --item-height: calc(var(--circ) / var(--segments-y));
+  /* The light-mode dome reads better against a neutral surface than against
+     pure white — a touch of warm grey lets the sentiment tiles pop. */
+  background:
+    radial-gradient(circle at 50% 50%, oklch(0.99 0 0), oklch(0.96 0 0) 80%);
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.dark .dome-surface {
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      oklch(0.21 0 0),
+      oklch(0.14 0 0) 80%
+    );
+}
+
+@media (min-width: 768px) {
+  .dome-surface {
+    height: 680px;
+  }
+}
+
+.dome-surface * {
+  box-sizing: border-box;
+}
+
+.dome-surface .sphere,
+.dome-surface .item,
+.dome-surface .item__face {
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.dome-surface main.sphere-main {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  background: transparent;
+  cursor: grab;
+}
+
+.dome-surface main.sphere-main:active {
+  cursor: grabbing;
+}
+
+.dome-surface .stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  perspective: calc(var(--radius) * 2);
+  perspective-origin: 50% 50%;
+  contain: layout paint size;
+}
+
+.dome-surface .sphere {
+  transform: translateZ(calc(var(--radius) * -1));
+  will-change: transform;
+  /* Hide the sphere until we've measured the container and set --radius —
+     prevents tiles from briefly stacking at 0,0 before being projected to
+     their dome positions (the cause of a 0.22 CLS hit on mobile). */
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.dome-surface[data-ready="true"] .sphere {
+  opacity: 1;
+}
+
+.dome-surface .overlay {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  z-index: 3;
+  pointer-events: none;
+  /* Vignette: fade tiles near the silhouette of the sphere so the edge
+     doesn't visually clip against the rounded container. */
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 60%,
+    oklch(0.99 0 0) 100%
+  );
+}
+
+.dark .dome-surface .overlay {
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 60%,
+    oklch(0.14 0 0) 100%
+  );
+}
+
+.dome-surface .item {
+  width: calc(var(--item-width) * var(--item-size-x));
+  height: calc(var(--item-height) * var(--item-size-y));
+  position: absolute;
+  top: -999px;
+  bottom: -999px;
+  left: -999px;
+  right: -999px;
+  margin: auto;
+  transform-origin: 50% 50%;
+  /* No transition on .item itself — the sphere transform animates instead
+     (much cheaper than per-tile transitions when there are 150–225 tiles). */
+  transform: rotateY(
+      calc(
+        var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2))
+      )
+    )
+    rotateX(
+      calc(
+        var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2))
+      )
+    )
+    translateZ(var(--radius));
+}
+
+.dome-surface .item__face {
+  position: absolute;
+  display: block;
+  inset: 4px;
+  border-radius: 10px;
+  background: transparent;
+  overflow: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dome-surface .edge-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 80px;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(to bottom, oklch(0.99 0 0), transparent);
+}
+
+.dark .dome-surface .edge-fade {
+  background: linear-gradient(to bottom, oklch(0.14 0 0), transparent);
+}
+
+.dome-surface .edge-fade--top {
+  top: 0;
+}
+
+.dome-surface .edge-fade--bottom {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+/* Reduced motion: in case the JS hasn't bailed yet (e.g. user toggled mid-
+   session), neutralise the 3D transforms so the dome doesn't keep spinning
+   from inertia. */
+@media (prefers-reduced-motion: reduce) {
+  .dome-surface .sphere {
+    transform: none !important;
+    will-change: auto;
+  }
+  .dome-surface .item {
+    transform: none !important;
+  }
+}
