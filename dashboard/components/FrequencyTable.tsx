@@ -1,4 +1,9 @@
-import type { FrequencyRow, Taxonomy, ThemeSentiment } from "@/lib/types";
+import type {
+  FrequencyRow,
+  Taxonomy,
+  ThemeSentiment,
+  VoicePanelRow,
+} from "@/lib/types";
 
 import { SentimentBadge } from "./SentimentBadge";
 import { ThemeRow } from "./ThemeRow";
@@ -35,20 +40,54 @@ function groupBySentiment(
   return groups;
 }
 
+/**
+ * Bucket curated voices by their `theme` id so each ThemeRow can receive its
+ * own narrow subset without re-scanning the full voice list. Voices with a
+ * null theme are skipped (they belong to the editor-picks panel only).
+ */
+function indexVoicesByTheme(
+  voices: VoicePanelRow[],
+): Map<string, VoicePanelRow[]> {
+  const map = new Map<string, VoicePanelRow[]>();
+  for (const v of voices) {
+    if (!v.theme) continue;
+    const bucket = map.get(v.theme);
+    if (bucket) {
+      bucket.push(v);
+    } else {
+      map.set(v.theme, [v]);
+    }
+  }
+  return map;
+}
+
 interface FrequencyTableProps {
   rows: FrequencyRow[];
   taxonomy: Taxonomy;
+  /**
+   * All curated voices — the FrequencyTable filters them per theme and
+   * passes the matching subset to each ThemeRow. v1.1: this is how the
+   * CEO sees WHAT people said about each theme without scrolling away.
+   */
+  voices: VoicePanelRow[];
 }
 
 /**
  * The CEO's primary scanning surface: every (sentiment × theme) row in the
- * corpus, breadth-first ranked, grouped by sentiment.
+ * corpus, breadth-first ranked, grouped by sentiment. Each row expands inline
+ * to show the full theme description, the top curated voice excerpts for
+ * that theme, and supporting Reddit threads.
  *
  * Server component. Static at build time (ISR — see app/page.tsx).
  */
-export function FrequencyTable({ rows, taxonomy }: FrequencyTableProps) {
+export function FrequencyTable({
+  rows,
+  taxonomy,
+  voices,
+}: FrequencyTableProps) {
   const groups = groupBySentiment(rows);
   const themeIndex = indexThemes(taxonomy);
+  const voicesByTheme = indexVoicesByTheme(voices);
 
   return (
     <section
@@ -64,7 +103,8 @@ export function FrequencyTable({ rows, taxonomy }: FrequencyTableProps) {
         </h2>
         <p className="text-sm text-muted-foreground">
           Themes ranked breadth-first within each sentiment bucket: distinct
-          threads &rarr; distinct comments &rarr; most recent comment.
+          threads &rarr; distinct comments &rarr; most recent comment. Click
+          any row to see what people actually said.
         </p>
       </header>
 
@@ -109,6 +149,7 @@ export function FrequencyTable({ rows, taxonomy }: FrequencyTableProps) {
                   key={`${row.sentiment}-${row.theme}-${row.journal}`}
                   row={row}
                   themeDef={themeIndex.get(row.theme)}
+                  voices={voicesByTheme.get(row.theme) ?? []}
                 />
               ))}
             </div>

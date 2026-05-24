@@ -1,6 +1,11 @@
 import { ExternalLink } from "lucide-react";
 
-import type { FrequencyRow, ThemeDef } from "@/lib/types";
+import type { FrequencyRow, ThemeDef, VoicePanelRow } from "@/lib/types";
+
+import { InlineVoiceExcerpt } from "./InlineVoiceExcerpt";
+
+/** Max curated voice excerpts rendered per theme inside the expansion. */
+const MAX_VOICES_PER_THEME = 3;
 
 /**
  * Render an ISO datetime as a compact short-form date for CEO-skim scanning.
@@ -31,15 +36,27 @@ function themeDescription(themeDef: ThemeDef | undefined): string | null {
 interface ThemeRowProps {
   row: FrequencyRow;
   themeDef: ThemeDef | undefined;
+  /**
+   * Voices already filtered to this theme by the parent FrequencyTable.
+   * Empty array is valid (renders the empty-state copy).
+   */
+  voices: VoicePanelRow[];
 }
 
 /**
  * A single row of the FrequencyTable, expandable inline (native <details>)
- * to reveal supporting thread URLs. No client-side JS required.
+ * to reveal: (1) full theme description, (2) up to 3 curated voice excerpts
+ * for this theme, (3) supporting thread URLs as a secondary section.
+ *
+ * No client-side JS required — the disclosure is a native <details>/<summary>.
  */
-export function ThemeRow({ row, themeDef }: ThemeRowProps) {
+export function ThemeRow({ row, themeDef, voices }: ThemeRowProps) {
   const label = themeLabel(row.theme, themeDef);
   const description = themeDescription(themeDef);
+  // Cap inline excerpts at MAX_VOICES_PER_THEME so a high-volume theme can't
+  // explode a row vertically — D's curation already orders by editorial
+  // preference, so the first N are the strongest.
+  const topVoices = voices.slice(0, MAX_VOICES_PER_THEME);
 
   return (
     <details className="group/row border-b border-border last:border-b-0">
@@ -87,27 +104,70 @@ export function ThemeRow({ row, themeDef }: ThemeRowProps) {
           />
         </svg>
       </summary>
-      <div className="bg-muted/30 px-3 pb-4 pt-1">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Supporting threads ({row.thread_urls.length})
-        </p>
-        <ul className="space-y-1.5">
-          {row.thread_urls.map((url) => (
-            <li key={url} className="text-sm">
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-foreground underline-offset-4 hover:underline"
-              >
-                <ExternalLink className="size-3.5 text-muted-foreground" />
-                <span className="truncate font-mono text-xs">
-                  {url.replace(/^https:\/\/(www\.)?reddit\.com/, "")}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+
+      <div className="flex flex-col gap-5 bg-muted/30 px-3 py-4 sm:px-5 sm:py-5">
+        {/* Section 1 — full theme description (no line-clamp) */}
+        {description ? (
+          <div className="flex flex-col gap-1.5">
+            <p className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+              About this theme
+            </p>
+            <p className="text-sm leading-6 text-foreground">{description}</p>
+          </div>
+        ) : null}
+
+        {/* Section 2 — top voice excerpts (or empty state) */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+              What people said
+            </p>
+            {voices.length > 0 ? (
+              <p className="font-mono text-[10px] tabular-nums text-muted-foreground">
+                {topVoices.length} of {voices.length} curated
+              </p>
+            ) : null}
+          </div>
+          {topVoices.length > 0 ? (
+            <div className="divide-y divide-border rounded-lg bg-background/60 px-4 ring-1 ring-inset ring-border">
+              {topVoices.map((voice) => (
+                <InlineVoiceExcerpt key={voice.permalink} card={voice} />
+              ))}
+            </div>
+          ) : (
+            <p className="rounded-lg bg-background/60 px-4 py-3 text-xs leading-relaxed text-muted-foreground ring-1 ring-inset ring-border">
+              No curated voices for this theme yet. Approve candidates via{" "}
+              <code className="rounded bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
+                voice-curate
+              </code>{" "}
+              to populate, or scan the supporting threads below.
+            </p>
+          )}
+        </div>
+
+        {/* Section 3 — supporting threads, demoted to secondary */}
+        <div className="flex flex-col gap-2 border-t border-border/60 pt-4">
+          <p className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+            Supporting Reddit threads ({row.thread_urls.length})
+          </p>
+          <ul className="space-y-1">
+            {row.thread_urls.map((url) => (
+              <li key={url} className="text-sm">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex max-w-full items-center gap-1.5 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                >
+                  <ExternalLink className="size-3.5 shrink-0" />
+                  <span className="truncate font-mono text-xs">
+                    {url.replace(/^https:\/\/(www\.)?reddit\.com/, "")}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </details>
   );

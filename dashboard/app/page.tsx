@@ -87,7 +87,11 @@ export default async function HomePage() {
         </dl>
       </header>
 
-      <FrequencyTable rows={agg.rows} taxonomy={taxonomy} />
+      <FrequencyTable
+        rows={agg.rows}
+        taxonomy={taxonomy}
+        voices={agg.voice_published}
+      />
 
       <Separator />
 
