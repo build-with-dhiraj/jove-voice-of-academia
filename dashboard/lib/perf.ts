@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Shared performance hooks for v1.2 heavy components.
  *
@@ -6,87 +8,93 @@
  * `~/.claude/plans/parsed-hatching-peach.md`:
  *
  *   - useReducedMotion → swap to static fallback (no anim, no mount)
- *   - useIsVisible    → pause RAF when scrolled off-screen
+ *   - useIsVisible    → pause RAF / WebGL when scrolled off-screen
  *   - useIsMobile     → reduce particle counts on small viewports
+ *
+ * Compose-phase unification note:
+ *
+ * The Antigravity exp branch and the Dome exp branch each introduced their
+ * own `useIsVisible` with incompatible signatures. The unified version here
+ * uses the more idiomatic React API — consumer owns the ref — to match
+ * `useIsVisible` patterns elsewhere in the ecosystem. AntigravityBg was
+ * updated to create its own ref and pass it in.
  */
 
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 
 const MOBILE_BREAKPOINT_PX = 768;
 
 /**
- * Returns true if the user has `prefers-reduced-motion: reduce` set.
- * SSR-safe: returns `false` during the initial server render, then resolves
- * on the client after mount. Components that key animation mount on this
- * value must therefore tolerate a one-frame flicker; for Antigravity we
- * gate the whole dynamic-import on this so the reduce-motion fallback
- * never even fetches the Three.js chunk.
+ * Media query hook. Subscribes once, cleans up on unmount.
+ *
+ * SSR-safe: returns `false` on first render to match the server (no `window`),
+ * then re-renders on the client with the real value. Prevents hydration drift.
+ */
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia(query);
+    setMatches(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [query]);
+
+  return matches;
+}
+
+/**
+ * `prefers-reduced-motion: reduce` — when true, components MUST render a
+ * static fallback in place of any motion / 3D / WebGL surface.
  */
 export function useReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
+  return useMediaQuery("(prefers-reduced-motion: reduce)");
 }
 
 /**
- * Returns true when the viewport width is below the mobile breakpoint.
+ * Convenience wrapper. Mobile breakpoint matches Tailwind's `md:` (768px).
  * Used to scale down Antigravity particle count to 300 (vs 830 desktop).
  */
-export function useIsMobile(breakpointPx: number = MOBILE_BREAKPOINT_PX): boolean {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mql = window.matchMedia(`(max-width: ${breakpointPx - 1}px)`);
-    const update = () => setIsMobile(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
-  }, [breakpointPx]);
-
-  return isMobile;
+export function useIsMobile(
+  breakpointPx: number = MOBILE_BREAKPOINT_PX,
+): boolean {
+  return useMediaQuery(`(max-width: ${breakpointPx - 1}px)`);
 }
 
 /**
- * IntersectionObserver hook. Returns [ref, isVisible].
- * The R3F `<Canvas>` is set to `frameloop="demand"` and `frameloop="always"`
- * is toggled based on this. When off-screen the render loop pauses — zero
- * RAF cost, fully releases the main thread for whatever the user is scrolling
- * toward.
+ * IntersectionObserver-based visibility hook. Returns true when the ref's
+ * element is intersecting the viewport (default threshold 0).
+ *
+ * Use this to pause expensive RAF loops / canvas renders / gesture listeners
+ * when a component is scrolled off-screen. The R3F `<Canvas>` is set to
+ * `frameloop="demand"` and `frameloop="always"` is toggled based on this.
+ *
+ * Initial value defaults to `true` so the first paint is "visible" — the
+ * canvas mounts immediately if the user lands on a hero. The observer
+ * corrects within one frame if it's actually off-screen.
  */
-export function useIsVisible<T extends Element = HTMLElement>(
-  options: IntersectionObserverInit = { rootMargin: "100px" },
-): [React.RefObject<T | null>, boolean] {
-  const ref = useRef<T | null>(null);
-  // Default to `true` so the first paint is "visible" — the canvas mounts
-  // immediately if the user lands on a hero. The observer corrects within
-  // one frame if it's actually off-screen.
-  const [isVisible, setIsVisible] = useState(true);
+export function useIsVisible<T extends Element>(
+  ref: RefObject<T | null>,
+  options: IntersectionObserverInit = { threshold: 0 },
+): boolean {
+  const [visible, setVisible] = useState(true);
+  // Stable options reference — we only care about identity changing if the
+  // caller actually swaps objects.
+  const optsRef = useRef(options);
+  optsRef.current = options;
 
   useEffect(() => {
-    if (typeof IntersectionObserver === "undefined") return;
-    const node = ref.current;
-    if (!node) return;
-
-    const obs = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      options,
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => setVisible(entries[0]?.isIntersecting ?? false),
+      optsRef.current,
     );
-    obs.observe(node);
-    return () => obs.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options.rootMargin, options.threshold]);
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
 
-  return [ref, isVisible];
+  return visible;
 }

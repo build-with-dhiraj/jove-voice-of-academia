@@ -20,6 +20,8 @@
  */
 
 import dynamic from "next/dynamic";
+import { useRef } from "react";
+
 import { useIsMobile, useIsVisible, useReducedMotion } from "@/lib/perf";
 
 import type { AntigravityProps } from "./AntigravityScene";
@@ -77,11 +79,10 @@ export interface AntigravityBgProps {
 export function AntigravityBg({ className }: AntigravityBgProps) {
   const reduced = useReducedMotion();
   const isMobile = useIsMobile();
-  const [ref, isVisible] = useIsVisible<HTMLDivElement>({
-    // Trigger 200px before scrolling on/off so the canvas resumes ahead of
-    // becoming visible (avoids a noticeable "snap to first frame").
-    rootMargin: "200px",
-  });
+  const ref = useRef<HTMLDivElement | null>(null);
+  // Trigger 200px before scrolling on/off so the canvas resumes ahead of
+  // becoming visible (avoids a noticeable "snap to first frame").
+  const isVisible = useIsVisible(ref, { rootMargin: "200px" });
 
   // The hero container always renders. The expensive Three.js work is
   // gated; the static gradient fallback is shown otherwise.
